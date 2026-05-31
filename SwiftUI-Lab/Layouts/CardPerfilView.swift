@@ -8,17 +8,20 @@
 import SwiftUI
 
 struct CardPerfilView: View {
+    
+    let usuario: Usuario
+    
     var body: some View {
         HStack {
-            Image(systemName: "person.circle.fill")
+            Image(systemName: usuario.fotoIcone)
                 .resizable()
                 .frame(width: 40, height: 40)
             
             VStack(alignment: .leading) {
-                Text("Rodrigo Silva")
+                Text(usuario.nome)
                     .font(Font.headline)
                 
-                Text("Desenvolver iOS")
+                Text(usuario.username)
                     .font(.system(.subheadline, design: .default, weight: .light))
                     .foregroundStyle(Color.gray)
             }
@@ -33,5 +36,5 @@ struct CardPerfilView: View {
 }
 
 #Preview {
-    CardPerfilView()
+    CardPerfilView(usuario: Usuario(nome: "Sonic The Hedgehog", username: "@sonichedgehog", fotoIcone: "spigot.fill"))
 }
