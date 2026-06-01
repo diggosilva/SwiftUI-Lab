@@ -15,6 +15,7 @@ struct CardPerfilView: View {
         HStack {
             Image(systemName: usuario.fotoIcone)
                 .resizable()
+                .scaledToFit()
                 .frame(width: 40, height: 40)
             
             VStack(alignment: .leading) {
