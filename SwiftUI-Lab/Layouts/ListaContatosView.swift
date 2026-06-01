@@ -23,14 +23,19 @@ struct ListaContatosView: View {
     ]
     
     var body: some View {
-        List {
-            ForEach(contatos) { amigo in
-                CardPerfilView(usuario: amigo)
+        NavigationStack {
+            List {
+                ForEach(contatos) { amigo in
+                    NavigationLink(destination: DetalheContatoView(usuario: amigo)) {
+                        CardPerfilView(usuario: amigo)
+                    }
                     .listRowSeparator(.hidden)
                     .listRowBackground(Color.clear)
+                }
             }
+            .navigationTitle("Contatos")
+            .scrollContentBackground(.hidden)
         }
-        .scrollContentBackground(.hidden)
     }
 }
 
