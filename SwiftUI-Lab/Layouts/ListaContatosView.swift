@@ -7,27 +7,20 @@
 
 import SwiftUI
 
-struct Usuario: Identifiable {
-    let id = UUID()
-    let nome: String
-    let username: String
-    let fotoIcone: String
-}
-
 struct ListaContatosView: View {
     
-    let contatos = [
-        Usuario(nome: "Mario Bros", username: "@mariobros", fotoIcone: "person.circle.fill"),
-        Usuario(nome: "Luigi Bros", username: "@luigibros", fotoIcone: "laptopcomputer"),
-        Usuario(nome: "Link Zelda", username: "@linkzelda", fotoIcone: "iphone"),
+    @State private var contatos = [
+        Usuario(nome: "Mario Bros", username: "@mariobros", fotoIcone: "person.circle.fill", favorito: false),
+        Usuario(nome: "Luigi Bros", username: "@luigibros", fotoIcone: "laptopcomputer", favorito: false),
+        Usuario(nome: "Link Zelda", username: "@linkzelda", fotoIcone: "iphone", favorito: false),
     ]
     
     var body: some View {
         NavigationStack {
             List {
-                ForEach(contatos) { amigo in
+                ForEach($contatos) { $amigo in
                     NavigationLink(destination: DetalheContatoView(usuario: amigo)) {
-                        CardPerfilView(usuario: amigo)
+                        CardPerfilView(usuario: $amigo)
                     }
                     .listRowSeparator(.hidden)
                     .listRowBackground(Color.clear)
