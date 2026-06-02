@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CardPerfilView: View {
     
-    let usuario: Usuario
+    @Binding var usuario: Usuario
     
     var body: some View {
         HStack {
@@ -26,7 +26,11 @@ struct CardPerfilView: View {
                     .font(.system(.subheadline, design: .default, weight: .light))
                     .foregroundStyle(Color.gray)
             }
+            
             Spacer()
+            
+            BotaoFavoritoView(estaFavoritado: $usuario.favorito)
+                .buttonStyle(.plain)
         }
         .padding()
         .background(Color.white)
@@ -37,5 +41,5 @@ struct CardPerfilView: View {
 }
 
 #Preview {
-    CardPerfilView(usuario: Usuario(nome: "Sonic The Hedgehog", username: "@sonichedgehog", fotoIcone: "spigot.fill"))
+    CardPerfilView(usuario: .constant(Usuario(nome: "Sonic The Hedgehog", username: "@sonichedgehog", fotoIcone: "spigot.fill", favorito: false)))
 }
