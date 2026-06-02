@@ -26,5 +26,5 @@ struct DetalheContatoView: View {
 }
 
 #Preview {
-    DetalheContatoView(usuario: Usuario(nome: "Sonic The Hedgehog", username: "@sonichedgehog", fotoIcone: "spigot.fill"))
+    DetalheContatoView(usuario: Usuario(nome: "Sonic The Hedgehog", username: "@sonichedgehog", fotoIcone: "spigot.fill", favorito: false))
 }
