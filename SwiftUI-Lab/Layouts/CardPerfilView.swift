@@ -12,11 +12,16 @@ struct CardPerfilView: View {
     @Binding var usuario: Usuario
     
     var body: some View {
-        HStack {
-            Image(systemName: usuario.fotoIcone)
-                .resizable()
-                .scaledToFit()
-                .frame(width: 40, height: 40)
+        HStack {            
+            AsyncImage(url: URL(string: usuario.fotoIcone)) { image in
+                image
+                    .resizable()
+                    .scaledToFill()
+            } placeholder: {
+                ProgressView()
+            }
+            .frame(width: 40, height: 40)
+            .clipShape(Circle())
             
             VStack(alignment: .leading) {
                 Text(usuario.nome)
