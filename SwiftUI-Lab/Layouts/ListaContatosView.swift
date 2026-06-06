@@ -15,6 +15,8 @@ struct ListaContatosView: View {
         Usuario(nome: "Link Zelda", username: "@linkzelda", fotoIcone: "https://cdn.wikimg.net/en/zeldawiki/images/thumb/0/0a/LANS_Link_Render.png/320px-LANS_Link_Render.png", favorito: false),
     ]
     
+    @State private var exibirCadastro = false
+    
     var body: some View {
         NavigationStack {
             List {
@@ -28,6 +30,16 @@ struct ListaContatosView: View {
             }
             .navigationTitle("Contatos")
             .scrollContentBackground(.hidden)
+            .toolbar {
+                Button(action: {
+                    exibirCadastro = true
+                }) {
+                    Image(systemName: "plus")
+                }
+            }
+        }
+        .sheet(isPresented: $exibirCadastro) {
+            CadastroContatoView(contatos: $contatos)
         }
     }
 }
