@@ -12,6 +12,10 @@ struct CadastroContatoView: View {
     @State private var username = ""
     @State private var urlFoto = ""
     
+    var formularioValido: Bool {
+        !nome.isEmpty && username.hasPrefix("@") && username.count >= 3 && urlFoto.hasPrefix("http")
+    }
+    
     @Binding var contatos: [Usuario]
     
     @Environment(\.dismiss) var dismiss
@@ -27,6 +31,9 @@ struct CadastroContatoView: View {
                             username = newValue.lowercased()
                         }
                     TextField("URL da Foto (Internet)", text: $urlFoto)
+                        .onChange(of: urlFoto) { oldValue, newValue in
+                            urlFoto = newValue.lowercased()
+                        }
                 }
             }
             .scrollDismissesKeyboard(.interactively)
@@ -52,11 +59,14 @@ struct CadastroContatoView: View {
                     .bold()
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(Color.blue)
+                    .background(
+                        formularioValido ? Color.blue : Color.gray
+                    )
                     .foregroundStyle(.white)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
             }
             .padding()
+            .disabled(!formularioValido)
         }
     }
 }
