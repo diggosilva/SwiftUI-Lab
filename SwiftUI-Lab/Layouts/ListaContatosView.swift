@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ListaContatosView: View {
+    private let userDefaults = UserDefaults.standard
+    private let keyContatos = "MeusContatos"
     
     @State private var contatos = [
         Usuario(nome: "Mario Bros", username: "@mariobros", fotoIcone: "https://t2.tudocdn.net/680322?w=1920", favorito: false),
@@ -30,6 +32,12 @@ struct ListaContatosView: View {
             }
             .navigationTitle("Contatos")
             .scrollContentBackground(.hidden)
+            .onAppear {
+                carregarContatos()
+            }
+            .onChange(of: contatos) {
+                salvarContatos()
+            }
             .toolbar {
                 Button(action: {
                     exibirCadastro = true
@@ -40,6 +48,19 @@ struct ListaContatosView: View {
         }
         .sheet(isPresented: $exibirCadastro) {
             CadastroContatoView(contatos: $contatos)
+        }
+    }
+    
+    func salvarContatos() {
+        if let dadosCodificados = try? JSONEncoder().encode(contatos) {
+            userDefaults.set(dadosCodificados, forKey: keyContatos)
+        }
+    }
+    
+    func carregarContatos() {
+        if let dadosSalvos = userDefaults.data(forKey: keyContatos),
+           let contatosDecodificados = try? JSONDecoder().decode([Usuario].self, from: dadosSalvos) {
+            self.contatos = contatosDecodificados
         }
     }
 }
