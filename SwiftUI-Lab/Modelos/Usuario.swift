@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct Usuario: Identifiable {
-    let id = UUID()
+struct Usuario: Identifiable, Codable, Equatable {
+    var id = UUID()
     let nome: String
     let username: String
     let fotoIcone: String
