@@ -12,16 +12,20 @@ struct CardPerfilView: View {
     @Binding var usuario: Usuario
     
     var body: some View {
-        HStack {            
-            AsyncImage(url: URL(string: usuario.fotoIcone)) { image in
-                image
+        HStack {
+            if let dadosDaFoto = usuario.fotoIcone, let uiImage = UIImage(data: dadosDaFoto) {
+                Image(uiImage: uiImage)
                     .resizable()
                     .scaledToFill()
-            } placeholder: {
-                ProgressView()
+                    .frame(width: 40, height: 40)
+                    .clipShape(Circle())
+            } else {
+                Image(systemName: "person.circle.fill")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 40, height: 40)
+                    .foregroundStyle(Color.gray)
             }
-            .frame(width: 40, height: 40)
-            .clipShape(Circle())
             
             VStack(alignment: .leading) {
                 Text(usuario.nome)
@@ -46,5 +50,5 @@ struct CardPerfilView: View {
 }
 
 #Preview {
-    CardPerfilView(usuario: .constant(Usuario(nome: "Sonic The Hedgehog", username: "@sonichedgehog", fotoIcone: "spigot.fill", favorito: false)))
+    CardPerfilView(usuario: .constant(Usuario(nome: "Sonic The Hedgehog", username: "@sonichedgehog", fotoIcone: nil, favorito: false)))
 }
