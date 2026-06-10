@@ -10,10 +10,9 @@ import SwiftUI
 struct CadastroContatoView: View {
     @State private var nome = ""
     @State private var username = ""
-    @State private var urlFoto = ""
     
     var formularioValido: Bool {
-        !nome.isEmpty && username.hasPrefix("@") && username.count >= 3 && urlFoto.hasPrefix("http")
+        !nome.isEmpty && username.hasPrefix("@") && username.count >= 3
     }
     
     @Binding var contatos: [Usuario]
@@ -30,22 +29,18 @@ struct CadastroContatoView: View {
                         .onChange(of: username) { oldValue, newValue in
                             username = newValue.lowercased()
                         }
-                    TextField("URL da Foto (Internet)", text: $urlFoto)
-                        .onChange(of: urlFoto) { oldValue, newValue in
-                            urlFoto = newValue.lowercased()
-                        }
                 }
             }
             .scrollDismissesKeyboard(.interactively)
             
             Button(action: {
                 // Criar o novo usuário com os dados digitados
-                guard !nome.isEmpty, !username.isEmpty, !urlFoto.isEmpty else { return }
+                guard !nome.isEmpty, !username.isEmpty else { return }
                 
                 let novoUsuario = Usuario(
                     nome: nome,
                     username: username,
-                    fotoIcone: urlFoto,
+                    fotoIcone: nil,
                     favorito: false
                 )
                 

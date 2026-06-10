@@ -11,6 +11,6 @@ struct Usuario: Identifiable, Codable, Equatable {
     var id = UUID()
     let nome: String
     let username: String
-    let fotoIcone: String
+    let fotoIcone: Data?
     var favorito: Bool
 }
