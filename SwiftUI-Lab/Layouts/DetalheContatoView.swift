@@ -13,15 +13,19 @@ struct DetalheContatoView: View {
     
     var body: some View {
         VStack {
-            AsyncImage(url: URL(string: usuario.fotoIcone)) { image in
-                image
+            if let dadosDaFoto = usuario.fotoIcone, let uiImage = UIImage(data: dadosDaFoto) {
+                Image(uiImage: uiImage)
                     .resizable()
                     .scaledToFill()
-            } placeholder: {
-                ProgressView()
+                    .frame(width: 100, height: 100)
+                    .clipShape(Circle())
+            } else {
+                Image(systemName: "person.circle.fill")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 100, height: 100)
+                    .foregroundStyle(Color.gray)
             }
-            .frame(width: 100, height: 100)
-            .clipShape(Circle())
             
             Text(usuario.nome)
                 .font(.headline)
@@ -30,5 +34,5 @@ struct DetalheContatoView: View {
 }
 
 #Preview {
-    DetalheContatoView(usuario: Usuario(nome: "Sonic The Hedgehog", username: "@sonichedgehog", fotoIcone: "https://caua1000.wordpress.com/wp-content/uploads/2012/11/sonic-the-hedgehog-classic-2.jpg", favorito: false))
+    DetalheContatoView(usuario: Usuario(nome: "Sonic The Hedgehog", username: "@sonichedgehog", fotoIcone: nil, favorito: false))
 }
