@@ -9,10 +9,12 @@ import SwiftUI
 
 struct DetalheContatoView: View {
     
-    let usuario: Usuario
+    @Binding var usuario: Usuario
+    
+    @State private var exibirEdicao = false
     
     var body: some View {
-        VStack {
+        VStack(spacing: 20) {
             if let dadosDaFoto = usuario.fotoIcone, let uiImage = UIImage(data: dadosDaFoto) {
                 Image(uiImage: uiImage)
                     .resizable()
@@ -29,10 +31,25 @@ struct DetalheContatoView: View {
             
             Text(usuario.nome)
                 .font(.headline)
+            
+            Text(usuario.username)
+                .font(.subheadline)
+            
+            Spacer()
+        }
+        .padding()
+        
+        .toolbar {
+            Button("Editar") {
+                exibirEdicao = true
+            }
+        }
+        .sheet(isPresented: $exibirEdicao) {
+            CadastroContatoView(contatos: .constant([]))
         }
     }
 }
 
 #Preview {
-    DetalheContatoView(usuario: Usuario(nome: "Sonic The Hedgehog", username: "@sonichedgehog", fotoIcone: nil, favorito: false))
+    DetalheContatoView(usuario: .constant(Usuario(nome: "Sonic The Hedgehog", username: "@sonichedgehog", fotoIcone: nil, favorito: false)))
 }
