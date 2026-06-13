@@ -24,6 +24,7 @@ struct ListaContatosView: View {
                     .listRowSeparator(.hidden)
                     .listRowBackground(Color.clear)
                 }
+                .onDelete(perform: deletarContato)
             }
             .navigationTitle("Contatos")
             .scrollContentBackground(.hidden)
@@ -57,6 +58,10 @@ struct ListaContatosView: View {
            let contatosDecodificados = try? JSONDecoder().decode([Usuario].self, from: dadosSalvos) {
             self.contatos = contatosDecodificados
         }
+    }
+    
+    func deletarContato(at offSet: IndexSet) {
+        contatos.remove(atOffsets: offSet)
     }
 }
 
