@@ -18,7 +18,8 @@ struct ListaContatosView: View {
         NavigationStack {
             List {
                 ForEach($contatos) { $amigo in
-                    NavigationLink(destination: DetalheContatoView(usuario: amigo)) {
+                    // Adicionado o '$' para passar o Binding esperado pelo DetalheContatoView
+                    NavigationLink(destination: DetalheContatoView(usuario: $amigo)) {
                         CardPerfilView(usuario: $amigo)
                     }
                     .listRowSeparator(.hidden)
